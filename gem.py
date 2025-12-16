@@ -1,42 +1,49 @@
-# Step 1: Import necessary libraries
+import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 from sklearn.datasets import load_iris
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
 
-# Step 2: Load the dataset
-# The Iris dataset is used here as a simple, built-in example
+# 1. Load the dataset
 iris = load_iris()
 X, y = iris.data, iris.target
+feature_names = iris.feature_names
+target_names = iris.target_names
 
-# Step 3: Split the data into training and testing sets
-# 80% for training, 20% for testing
+# 2. Visualize the Data (Sepal Length vs Sepal Width)
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(X[:, 0], X[:, 1], c=y, cmap='viridis', edgecolor='k', s=100)
+plt.xlabel(feature_names[0])
+plt.ylabel(feature_names[1])
+plt.title('Iris Dataset: Sepal Length vs Sepal Width')
+plt.legend(handles=scatter.legend_elements()[0], labels=list(target_names))
+plt.grid(True)
+plt.savefig('iris_visualization.png')
+print("Visualization saved.")
+
+# 3. Optimize Parameters using Grid Search
+# Split and Scale Data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Optional Step 4: Preprocess the data (Feature Scaling)
-# Scaling is important for algorithms like KNN
 scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-# Step 5: Choose and train the model
-# Using K-nearest Neighbors with k=3
-model = KNeighborsClassifier(n_neighbors=3)
-model.fit(X_train, y_train)
+# Define parameter grid (testing k from 1 to 30)
+param_grid = {'n_neighbors': range(1, 31)}
 
-# Step 6: Make predictions and evaluate the model
-y_pred = model.predict(X_test)
+# Initialize KNN and Grid Search
+knn = KNeighborsClassifier()
+grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy')
 
-# Calculate accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Model Accuracy: {accuracy*100:.2f}%")
+# Fit the search
+grid_search.fit(X_train_scaled, y_train)
 
-# Step 7: Use the model to predict a new data point (example)
-# A new sample (sepal length, sepal width, petal length, petal width)
-new_data = [[5.1, 3.5, 1.4, 0.2]]
-# Scale the new data point using the same scaler
-new_data_scaled = scaler.transform(new_data) 
-prediction = model.predict(new_data_scaled)
-print(f"Prediction for new data point: {iris.target_names[prediction[0]]}")
+# Output results
+print(f"Best Parameters: {grid_search.best_params_}")
+print(f"Best Cross-Validation Score: {grid_search.best_score_:.4f}")
+
+# Validate on Test Set
+best_model = grid_search.best_estimator_
+test_accuracy = best_model.score(X_test_scaled, y_test)
+print(f"Test Set Accuracy with Best Model: {test_accuracy*100:.2f}%")
