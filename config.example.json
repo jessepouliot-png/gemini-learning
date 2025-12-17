@@ -1,0 +1,18 @@
+{
+  "api_key": "YOUR_GEMINI_API_KEY_HERE",
+  "model": "gemini-pro",
+  "analysis_depth": "standard",
+  "focus_areas": [
+    "performance",
+    "memory",
+    "disk",
+    "services",
+    "packages",
+    "boot_time",
+    "security"
+  ],
+  "output_format": "detailed",
+  "report_file": "arch_optimization_report.txt",
+  "safety_mode": true,
+  "max_recommendations": 50
+}
