@@ -17,13 +17,13 @@ from dotenv import load_dotenv
 class GeminiClient:
     """Client for interacting with Google's Gemini AI API."""
 
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-pro"):
+    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-1.5-flash"):
         """
         Initialize the Gemini client.
         
         Args:
             api_key: Google Gemini API key. If None, will try to load from environment.
-            model: Model name to use (default: gemini-pro)
+            model: Model name to use (default: gemini-1.5-flash)
         """
         # Load environment variables
         load_dotenv()

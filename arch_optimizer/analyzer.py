@@ -41,7 +41,7 @@ class ArchOptimizer:
         if init_gemini:
             self.gemini_client = GeminiClient(
                 api_key=api_key or self.config.get('api_key'),
-                model=self.config.get('model', 'gemini-pro')
+                model=self.config.get('model', 'gemini-1.5-flash')
             )
         
         # Store results

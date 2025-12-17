@@ -86,7 +86,7 @@ cp config.example.json config.json
 ```json
 {
   "api_key": "your-api-key-here",
-  "model": "gemini-pro",
+  "model": "gemini-1.5-flash",
   "analysis_depth": "standard",
   "focus_areas": ["performance", "memory", "disk"],
   "output_format": "markdown",
@@ -138,7 +138,7 @@ The configuration file (`config.json`) supports the following options:
 ```json
 {
   "api_key": "YOUR_GEMINI_API_KEY_HERE",
-  "model": "gemini-pro",
+  "model": "gemini-1.5-flash",
   "analysis_depth": "standard",
   "focus_areas": [
     "performance",
@@ -159,7 +159,7 @@ The configuration file (`config.json`) supports the following options:
 ### Configuration Options
 
 - **api_key**: Your Google Gemini API key
-- **model**: Gemini model to use (default: "gemini-pro")
+- **model**: Gemini model to use (default: "gemini-1.5-flash")
 - **analysis_depth**: Level of detail - "basic", "standard", or "deep"
 - **focus_areas**: Array of areas to analyze
 - **output_format**: Report format - "text", "markdown", or "json"

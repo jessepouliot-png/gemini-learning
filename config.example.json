@@ -1,6 +1,6 @@
 {
   "api_key": "YOUR_GEMINI_API_KEY_HERE",
-  "model": "gemini-pro",
+  "model": "gemini-1.5-flash",
   "analysis_depth": "standard",
   "focus_areas": [
     "performance",
