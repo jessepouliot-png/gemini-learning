@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 class GeminiClient:
     """Client for interacting with Google's Gemini AI API."""
 
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-pro"):
+    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-2.5-flash"):
         """
         Initialize the Gemini client.
         
@@ -38,8 +38,6 @@ class GeminiClient:
         
         # Configure Gemini
         genai.configure(api_key=self.api_key)
-        self.model_name = model
-        self.model = genai.GenerativeModel(model)
         
         # Generation configuration
         self.generation_config = {
@@ -68,6 +66,13 @@ class GeminiClient:
                 "threshold": "BLOCK_MEDIUM_AND_ABOVE"
             }
         ]
+
+        self.model_name = model
+        self.model = genai.GenerativeModel(
+            model,
+            generation_config=self.generation_config,
+            safety_settings=self.safety_settings
+        )
 
     def create_analysis_prompt(
         self, 
@@ -181,11 +186,7 @@ should be safe, reversible, and appropriate for an Arch Linux system.
             prompt = self.create_analysis_prompt(system_info, focus_areas, analysis_depth)
             
             # Generate response
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
-            )
+            response = self.model.generate_content(prompt)
             
             # Extract the text response
             if not response.candidates:

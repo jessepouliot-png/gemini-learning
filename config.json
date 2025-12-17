@@ -1,0 +1,18 @@
+{
+  "api_key": "AIzaSyB_jgf2Qeb7A6RUmhwE_u8ZJHsOdd0ZlII",
+  "model": "gemini-2.5-flash",
+  "analysis_depth": "standard",
+  "focus_areas": [
+    "performance",
+    "memory",
+    "disk",
+    "services",
+    "packages",
+    "boot_time",
+    "security"
+  ],
+  "output_format": "detailed",
+  "report_file": "arch_optimization_report.txt",
+  "safety_mode": true,
+  "max_recommendations": 50
+}
