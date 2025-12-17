@@ -204,11 +204,44 @@ should be safe, reversible, and appropriate for an Arch Linux system.
                 'response_length': len(recommendations)
             }
             
-        except Exception as e:
+        except TimeoutError as e:
             return {
                 'success': False,
-                'error': str(e)
+                'error': f'Request timeout: {str(e)}. Please try again.'
             }
+        except ConnectionError as e:
+            return {
+                'success': False,
+                'error': f'Network connection error: {str(e)}. Check your internet connection.'
+            }
+        except ValueError as e:
+            return {
+                'success': False,
+                'error': f'Invalid request or API key: {str(e)}'
+            }
+        except Exception as e:
+            error_msg = str(e)
+            # Check for common API errors
+            if 'API key' in error_msg:
+                return {
+                    'success': False,
+                    'error': f'API key error: {error_msg}'
+                }
+            elif 'quota' in error_msg.lower() or 'limit' in error_msg.lower():
+                return {
+                    'success': False,
+                    'error': f'API quota or rate limit exceeded: {error_msg}'
+                }
+            elif 'safety' in error_msg.lower():
+                return {
+                    'success': False,
+                    'error': f'Content safety filter triggered: {error_msg}'
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': f'Unexpected error: {error_msg}'
+                }
 
     def parse_recommendations(self, analysis_result: Dict[str, Any]) -> Dict[str, List[str]]:
         """
