@@ -50,8 +50,8 @@ case "$1" in
         sudo journalctl -u $SERVICE_NAME --no-pager -n 50
         echo ""
         echo "Full analysis log:"
-        if [[ -f "/home/jpouliot/arch-optimizer-startup.log" ]]; then
-            tail -30 /home/jpouliot/arch-optimizer-startup.log
+        if [[ -f "$HOME/arch-optimizer-startup.log" ]]; then
+            tail -30 "$HOME/arch-optimizer-startup.log"
         else
             echo "Log file not found"
         fi

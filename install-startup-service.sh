@@ -31,7 +31,7 @@ sudo cp "$SERVICE_FILE" "$SYSTEMD_DIR/$SERVICE_NAME"
 sudo chmod 644 "$SYSTEMD_DIR/$SERVICE_NAME"
 
 # Create log file in user home directory
-touch /home/jpouliot/arch-optimizer-startup.log
+touch "$HOME/arch-optimizer-startup.log"
 
 # Reload systemd daemon
 echo "Reloading systemd daemon..."

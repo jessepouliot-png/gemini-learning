@@ -23,7 +23,7 @@ class GeminiClient:
         
         Args:
             api_key: Google Gemini API key. If None, will try to load from environment.
-            model: Model name to use (default: gemini-pro)
+            model: Model name to use (default: gemini-2.5-flash)
         """
         # Load environment variables
         load_dotenv()
